@@ -101,7 +101,59 @@ quit;
    systemctl enable mariadb
    ```
 - type `systemctl status mariadb` to check MariaDB is running.
-- 
+### Download Nextcloud, Unzip and Permission
+- Download and unzip in the /var/www/html folder
+  ```
+  cd /var/www/html
+  wget https://download.nextcloud.com/server/releases/latest.zip
+  unzip latest.zip
+  ```
+- Change the ownership of the nextcloud directory to the HTTP user.
+  ```
+  chown -R www-data:www-data /var/www/html/nextcloud/
+  ```
+### Install Nextcloud From Command Line
+- Run the below command to install nextcloud (provide your own credentials)
+  ```
+  cd /var/www/html/nextcloud
+  sudo -u www-data php occ  maintenance:install --database \
+  "mysql" --database-name "nextcloud"  --database-user "nextcloud" --database-pass \
+  'nextcloud' --admin-user "tek" --admin-pass "1qazxsw2"
+  ```
+- Nextcloud allows access only from localhost, add a trusted ip or domain
+  ```
+  vi /var/www/html/nextcloud/config/config.php
+
+  'trusted_domains' =>
+  array (
+    0 => 'localhost',
+    1 => 'nc.mailserverguru.com',   // we Included the Sub Domain
+  ),
+  .....
+:x
+```
+- Configure Apache to load Nextcloud from the /var/www/html/nextcloud folder. I used port `8080`
+```
+vi /etc/apache2/sites-enabled/000-default.conf
+
+<VirtualHost *:8080>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html/nextcloud
+        
+        <Directory /var/www/html/nextcloud>
+            Options Indexes FollowSymLinks
+            AllowOverride All
+            Require all granted
+	      </Directory>
+        
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+- Now restart Apache
+- access nextcloud (http://localhost:8080)
+
+
   
 
 
