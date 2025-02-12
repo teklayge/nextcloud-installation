@@ -1,5 +1,5 @@
 # nextcloud-installation
-Nextcloud installation on Ubuntu 20.4 server
+Nextcloud installation on Ubuntu 24.04 server
 
 # OPtion 1: [Example installation on Ubuntu 20.04 LTS](https://docs.nextcloud.com/server/20/admin_manual/installation/example_ubuntu.html/)
 - install packages required by nextcloud
@@ -20,6 +20,24 @@ CREATE DATABASE IF NOT EXISTS nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_ge
 GRANT ALL PRIVILEGES ON nextcloud.* TO 'nextcloud'@'localhost';
 FLUSH PRIVILEGES;
 ```
-
+# OPtion 2: [Install Nextcloud on Ubuntu 24.04 LTS – Complete Guide] (https://mailserverguru.com/install-nextcloud-on-ubuntu-24-04-lts/)
+- install apache2
+```
+apt install apache2 -y
+```
+- install php modules
+```
+apt install php php-common libapache2-mod-php php-bz2 php-gd php-mysql \
+php-curl php-mbstring php-imagick php-zip php-common php-curl php-xml \
+php-json php-bcmath php-xml php-intl php-gmp zip unzip wget -y
+```
+- Enable required Apache modules
+`a2enmod env rewrite dir mime headers setenvif ssl`
+- Now, Restart, Enable and Check Apache is Running Properly.
+```
+systemctl restart apache2
+systemctl enable apache2
+```
+- 
 
 
