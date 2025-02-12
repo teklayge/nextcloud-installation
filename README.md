@@ -133,6 +133,7 @@ quit;
 :x
 ```
 - Configure Apache to load Nextcloud from the /var/www/html/nextcloud folder. I used port `8080`
+
 ```
 vi /etc/apache2/sites-enabled/000-default.conf
 
