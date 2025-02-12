@@ -81,6 +81,29 @@ Loaded Modules:
 root@tek-OptiPlex-3020:~#
 ```
 ### Install and Configure MariaDB Server
+- install mariadb-server
+```
+apt install mariadb-server -y
+```
+- type `mysql` to Login to MariaDB
+- Create Database and User for Nextcloud and Provide User Permissions.
+```
+CREATE USER 'nextcloud'@'localhost' IDENTIFIED BY 'nextcloud';
+CREATE DATABASE nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+GRANT ALL PRIVILEGES ON nextcloud.* TO 'nextcloud'@'localhost';
+FLUSH PRIVILEGES;
+quit;
+
+```
+- Now, restart and enable MariaDB service.
+   ```
+   systemctl restart mariadb
+   systemctl enable mariadb
+   ```
+- type `systemctl status mariadb` to check MariaDB is running.
 - 
+  
+
+
 
 
