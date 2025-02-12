@@ -129,11 +129,10 @@ quit;
     0 => 'localhost',
     1 => 'nc.mailserverguru.com',   // we Included the Sub Domain
   ),
-  .....
-:x
-```
-- Configure Apache to load Nextcloud from the /var/www/html/nextcloud folder. I used port `8080`
-
+  
+ :x
+ ```
+- Configure Apache to load Nextcloud from the /var/www/html/nextcloud folder. I used port `8080`.
 ```
 vi /etc/apache2/sites-enabled/000-default.conf
 
