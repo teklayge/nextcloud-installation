@@ -122,33 +122,33 @@ quit;
   ```
 - Nextcloud allows access only from localhost, add a trusted ip or domain
   ```
-  vi /var/www/html/nextcloud/config/config.php
-
-  'trusted_domains' =>
-  array (
-    0 => 'localhost',
-    1 => 'nc.mailserverguru.com',   // we Included the Sub Domain
-  ),
+	  vi /var/www/html/nextcloud/config/config.php
+	
+	  'trusted_domains' =>
+	  array (
+	    0 => 'localhost',
+	    1 => 'nc.mailserverguru.com',   // we Included the Sub Domain
+	  ),
+   ```
   
- ```
 - Configure Apache to load Nextcloud from the /var/www/html/nextcloud folder. I used port `8080`.
-```
-vi /etc/apache2/sites-enabled/000-default.conf
-
-<VirtualHost *:8080>
-        ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/html/nextcloud
-        
-        <Directory /var/www/html/nextcloud>
-            Options Indexes FollowSymLinks
-            AllowOverride All
-            Require all granted
-	      </Directory>
-        
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-```
+	```  
+	vi /etc/apache2/sites-enabled/000-default.conf
+	
+	<VirtualHost *:8080>
+	        ServerAdmin webmaster@localhost
+	        DocumentRoot /var/www/html/nextcloud
+	        
+	        <Directory /var/www/html/nextcloud>
+	            Options Indexes FollowSymLinks
+	            AllowOverride All
+	            Require all granted
+		      </Directory>
+	        
+	        ErrorLog ${APACHE_LOG_DIR}/error.log
+	        CustomLog ${APACHE_LOG_DIR}/access.log combined
+	</VirtualHost>
+	```
 - Now restart Apache
 - access nextcloud (http://localhost:8080)
 
