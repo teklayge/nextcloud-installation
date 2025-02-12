@@ -20,7 +20,7 @@ CREATE DATABASE IF NOT EXISTS nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_ge
 GRANT ALL PRIVILEGES ON nextcloud.* TO 'nextcloud'@'localhost';
 FLUSH PRIVILEGES;
 ```
-# OPtion 2: [Install Nextcloud on Ubuntu 24.04 LTS – Complete Guide] (https://mailserverguru.com/install-nextcloud-on-ubuntu-24-04-lts/)
+# OPtion 2: [Install Nextcloud on Ubuntu 24.04 LTS – Complete Guide](https://mailserverguru.com/install-nextcloud-on-ubuntu-24-04-lts/)
 ### Install Apache2 and PHP Modules.
 - install apache2
 ```
