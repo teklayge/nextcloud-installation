@@ -118,9 +118,9 @@ quit;
   cd /var/www/html/nextcloud
   sudo -u www-data php occ  maintenance:install --database \
   "mysql" --database-name "nextcloud"  --database-user "nextcloud" --database-pass \
-  'nextcloud' --admin-user "tek" --admin-pass "1qazxsw2"
+  'nextcloud' --admin-user "admin" --admin-pass "admin"
   ```
-- I think,the database credentials can be configured later with browser. In that case, the ff command can be used to install nextcloud.
+- I think,the database and other credentials can be configured later with browser. In that case, the ff command can be used to install nextcloud.
   `chown -R www-data:www-data /var/www/html/nextcloud`.
 - Nextcloud allows access only from localhost, add a trusted ip or domain
   ```
@@ -132,7 +132,7 @@ quit;
 	    1 => 'nc.mailserverguru.com',   // we Included the Sub Domain
 	  ),
    ```
--	But, the `/var/www/html/nextcloud/config/config.php` doesn't have an entry, I am not sure if I have to add the `trusted_domains` thing. For now, I have skipped it.
+	- But, the `/var/www/html/nextcloud/config/config.php` doesn't have an entry for trusted_domains. I am not sure if I have to add the `trusted_domains` thing. For now, I have skipped it.
 
 - Configure Apache to load Nextcloud from the /var/www/html/nextcloud folder. I used port `8080`.
 	```  
