@@ -155,7 +155,7 @@ Configure Apache to load Nextcloud from the /var/www/html/nextcloud folder. I ed
 	CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 ```
-Now restart Apache for the change to take effect 
+Restart Apache for the changes to take effect. 
 ```
 sudo service apache2 restart
 ```
