@@ -3,18 +3,22 @@ Nextcloud installation on a new Ubuntu 24.04 server
 
 Nextcloud Hub is the industry-leading, fully open-source, on premise content collaboration platform. Teams access, share and edit their documents, chat and participate in video calls and manage their mail and calendar and projects across mobile, desktop and web interfaces. More information can be found at (https://nextcloud.com/about/)
 
-I am new to nextcloud and strictly followed the the steps presented at [Install Nextcloud on Ubuntu 24.04 LTS – Complete Guide](https://mailserverguru.com/install-nextcloud-on-ubuntu-24-04-lts/).
+I am new to nextcloud and strictly followed the the steps presented at [Install Nextcloud on Ubuntu 24.04 LTS – Complete Guide](https://mailserverguru.com/install-nextcloud-on-ubuntu-24-04-lts/). I have outlined the steps as follows.
 
-### Install Apache2 and PHP Modules.
-- install apache2
+The core system of Nextcloud requires **Apache**, **MariaDB**, and **PHP** to be installed. 
+## Step 1: Update and Upgrade the Ubuntu Packages
+`sudo apt update && apt upgrade -y`
+
+## Step2: Install Apache2
 ```
-apt install apache2 -y
+sudo apt install apache2 -y
 ```
-- install php modules
+## Step3: Install PHP modules and dependencies
+- Visit [PHP Modules & Configuration](https://docs.nextcloud.com/server/latest/admin_manual/installation/php_configuration.html/) for more info. Use `php -m` from cli to list all the installed PHP modules.
 ```
-apt install php php-common libapache2-mod-php php-bz2 php-gd php-mysql \
-php-curl php-mbstring php-imagick php-zip php-common php-curl php-xml \
-php-json php-bcmath php-xml php-intl php-gmp zip unzip wget -y
+sudo apt install php php-common libapache2-mod-php php-bz2 php-gd php-mysql \
+sudo php-curl php-mbstring php-imagick php-zip php-common php-curl php-xml \
+sudo php-json php-bcmath php-xml php-intl php-gmp zip unzip wget -y
 ```
 - Enable required Apache modules
 ```
