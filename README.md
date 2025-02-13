@@ -153,7 +153,7 @@ quit;
 	</VirtualHost>
 	```
 - Now restart Apache
-- access nextcloud (http://localhost:8080)
+- access nextcloud (http://localhost/nextcloud)
 
 
   
