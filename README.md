@@ -1,4 +1,5 @@
 # nextcloud-installation
+
 Nextcloud installation on a new Ubuntu 24.04 server
 
 Nextcloud Hub is the industry-leading, fully open-source, on premise content collaboration platform. Teams access, share and edit their documents, chat and participate in video calls and manage their mail and calendar and projects across mobile, desktop and web interfaces. More information can be found at (https://nextcloud.com/about/)
@@ -6,22 +7,28 @@ Nextcloud Hub is the industry-leading, fully open-source, on premise content col
 I am new to nextcloud and followed the the steps presented at [Install Nextcloud on Ubuntu 24.04 LTS – Complete Guide](https://mailserverguru.com/install-nextcloud-on-ubuntu-24-04-lts/). I have outlined the steps as follows.
 
 The core system of Nextcloud requires **Apache**, **MariaDB**, and **PHP** to be installed. Their installation and configuration procedures are presented in the following sections.
+
 ## Step 1: Update Ubuntu packages
+
 `sudo apt update && apt upgrade -y`
 
 ## Step2: Install Apache2
+
 ```
 sudo apt install apache2 -y
 ```
 ## Step3: Install PHP modules and dependencies
+
 - Visit [PHP Modules & Configuration](https://docs.nextcloud.com/server/latest/admin_manual/installation/php_configuration.html/) for more info. Use `php -m` from CLI to list all the installed PHP modules.
 ```
 sudo apt install php php-common libapache2-mod-php php-bz2 php-gd php-mysql \
      php-curl php-mbstring php-imagick php-zip php-common php-curl php-xml \
      php-json php-bcmath php-xml php-intl php-gmp zip unzip wget -y
 ```
+
 ## Step 4: Enable required Apache modules
-For Nextcloud to work correctly, we need `mod_rewrite`,`mod_headers`, `mod_env`, `mod_dir` and `mod_mime` modules.
+
+For Nextcloud to work correctly, we need `mod_env`, `mod_rewrite`,`mod_headers`, `mod_env`, `mod_dir` and `mod_mime` modules.
 Enable them by running:
 ```
 sudo a2enmod env
@@ -98,63 +105,63 @@ Now, restart and enable MariaDB service. Also type `systemctl status mariadb` to
 sudo systemctl restart mariadb
 sudo systemctl enable mariadb
 ```
+
 ## Step 6: Install Nextcloud
+
 Three steps are neede to install NextCloud from CLI.
 
-**Download NextCloud**
+**Download NextCloud and unpack nextcloud**
 
-Download the archive of the latest Nextcloud version from https://download.nextcloud.com/server/releases/latest.zip. Visit [releases](https://download.nextcloud.com/server/releases/) for all realses of NextCloud. I downloaded and unzip it from my web directory.
+Download the archive of the latest Nextcloud version from https://download.nextcloud.com/server/releases/latest.zip. Visit [releases](https://download.nextcloud.com/server/releases/) for all releases of NextCloud. I downloaded to and unzip it from my web directory.
 ```
 cd /var/www/html
 wget https://download.nextcloud.com/server/releases/latest.zip
 unzip latest.zip
 ```
+
+**Change the ownership**
+
 Change the ownership of the nextcloud directory to the HTTP user.
 ```
-chown -R www-data:www-data /var/www/html/nextcloud/
+sudo chown -R www-data:www-data /var/www/html/nextcloud/
 ```
-## Step 7:  From Command Line
-- Run the commands shown to install nextcloud. 
-  ```
-  cd /var/www/html/nextcloud
-  sudo -u www-data php occ  maintenance:install --database \
-  "mysql" --database-name "nextcloud"  --database-user "nextcloud" --database-pass \
-  'nextcloud' --admin-user "admin" --admin-pass "admin"
-  ```
-- I think,the database and other credentials can be configured later with browser. In that case, the ff command can be used to install nextcloud.
-  `chown -R www-data:www-data /var/www/html/nextcloud`.
-- Nextcloud allows access only from localhost, add a trusted ip or domain
-  ```
-	 nano /var/www/html/nextcloud/config/config.php
-	
-	  'trusted_domains' =>
-	  array (
-	    0 => 'localhost',
-	    1 => 'nc.mailserverguru.com',   // we Included the Sub Domain
-	  ),
-   ```
-	- But, the `/var/www/html/nextcloud/config/config.php` doesn't have an entry for trusted_domains. I am not sure if I have to add the `trusted_domains` thing. For now, I have skipped it.
+**Install nextcloud server**
 
-- Configure Apache to load Nextcloud from the /var/www/html/nextcloud folder. I used port `8080`.
-	```  
-	nano /etc/apache2/sites-enabled/000-default.conf
+Use the occ command to complete the installation. This takes the place of running the graphical Installation Wizard.
+The `admin-user` and `admin-pass` are used to login to the NextCloud server. These credentials can be configured from the graphical installation if required.
+```
+cd /var/www/html/nextcloud
+sudo -u www-data php occ  maintenance:install --database \
+"mysql" --database-name "nextcloud"  --database-user "nextcloud" --database-pass \
+'nextcloud' --admin-user "admin" --admin-pass "admin"
+```
+Nextcloud’s `occ` command is Nextcloud’s command-line interface. We can perform many common server operations with occ, such as installing and upgrading Nextcloud, manage users, encryption, passwords, LDAP setting, and more. There is a lot more about `occ` command. Visit [Using the occ command](https://docs.nextcloud.com/server/latest/admin_manual/occ_command.html#command-line-installation-label/) of the official documentation for more details.
+
+## Step 7: Configure Apache
+
+Configure Apache to load Nextcloud from the /var/www/html/nextcloud folder. I edited `/etc/apache2/sites-enabled/000-default.conf` file to add the following Virtual Host information for my nextcloud server. 
+```  
+<VirtualHost *:80>
+	ServerAdmin webmaster@localhost
+	DocumentRoot /var/www/html/nextcloud
 	
-	<VirtualHost *:80>
-	        ServerAdmin webmaster@localhost
-	        DocumentRoot /var/www/html/nextcloud
-	        
-	        <Directory /var/www/html/nextcloud>
-	            Options Indexes FollowSymLinks
-	            AllowOverride All
-	            Require all granted
-		      </Directory>
-	        
-	        ErrorLog ${APACHE_LOG_DIR}/error.log
-	        CustomLog ${APACHE_LOG_DIR}/access.log combined
-	</VirtualHost>
-	```
-- Now restart Apache
-- access nextcloud (`http://localhost/nextcloud`)
+	<Directory /var/www/html/nextcloud>
+	    Options Indexes FollowSymLinks
+	    AllowOverride All
+	    Require all granted
+        </Directory>
+	
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+Now restart Apache for the change to take effect 
+```
+sudo service apache2 restart
+```
+
+Now NextCloud server can be accessed at `http://localhost/nextcloud`
+
 
 
   
