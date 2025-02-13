@@ -22,7 +22,7 @@ sudo apt install php php-common libapache2-mod-php php-bz2 php-gd php-mysql \
 ```
 ## Step 4: Enable required Apache modules
 For Nextcloud to work correctly, we need `mod_rewrite`,`mod_headers`, `mod_env`, `mod_dir` and `mod_mime` modules.
-Enable the modules by running:
+Enable them by running:
 ```
 a2enmod env
 a2enmod rewrite
