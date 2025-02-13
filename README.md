@@ -5,7 +5,7 @@ Nextcloud Hub is the industry-leading, fully open-source, on premise content col
 
 I am new to nextcloud and followed the the steps presented at [Install Nextcloud on Ubuntu 24.04 LTS – Complete Guide](https://mailserverguru.com/install-nextcloud-on-ubuntu-24-04-lts/). I have outlined the steps as follows.
 
-The core system of Nextcloud requires **Apache**, **MariaDB**, and **PHP** to be installed. 
+The core system of Nextcloud requires **Apache**, **MariaDB**, and **PHP** to be installed. Their installation and configuration procedures are presented in the following sections.
 ## Step 1: Update and Upgrade the Ubuntu Packages
 `sudo apt update && apt upgrade -y`
 
@@ -14,15 +14,23 @@ The core system of Nextcloud requires **Apache**, **MariaDB**, and **PHP** to be
 sudo apt install apache2 -y
 ```
 ## Step3: Install PHP modules and dependencies
-- Visit [PHP Modules & Configuration](https://docs.nextcloud.com/server/latest/admin_manual/installation/php_configuration.html/) for more info. Use `php -m` from cli to list all the installed PHP modules.
+- Visit [PHP Modules & Configuration](https://docs.nextcloud.com/server/latest/admin_manual/installation/php_configuration.html/) for more info. Use `php -m` from CLI to list all the installed PHP modules.
 ```
 sudo apt install php php-common libapache2-mod-php php-bz2 php-gd php-mysql \
      php-curl php-mbstring php-imagick php-zip php-common php-curl php-xml \
      php-json php-bcmath php-xml php-intl php-gmp zip unzip wget -y
 ```
-- Enable required Apache modules
+## Step 4: Enable required Apache modules
+For Nextcloud to work correctly, we need `mod_rewrite`,`mod_headers`, `mod_env`, `mod_dir` and `mod_mime` modules.
+Enable the modules by running:
 ```
-a2enmod env rewrite dir mime headers setenvif ssl
+a2enmod env
+a2enmod rewrite
+a2enmod dir
+a2enmod mime
+a2enmod headers
+a2enmod setenvif
+a2enmod ssl
 ```
 - Now, Restart, Enable and Check Apache is Running Properly.
 ```
@@ -112,7 +120,7 @@ quit;
   `chown -R www-data:www-data /var/www/html/nextcloud`.
 - Nextcloud allows access only from localhost, add a trusted ip or domain
   ```
-	  vi /var/www/html/nextcloud/config/config.php
+	 nano /var/www/html/nextcloud/config/config.php
 	
 	  'trusted_domains' =>
 	  array (
@@ -124,9 +132,9 @@ quit;
 
 - Configure Apache to load Nextcloud from the /var/www/html/nextcloud folder. I used port `8080`.
 	```  
-	vi /etc/apache2/sites-enabled/000-default.conf
+	nano /etc/apache2/sites-enabled/000-default.conf
 	
-	<VirtualHost *:8080>
+	<VirtualHost *:80>
 	        ServerAdmin webmaster@localhost
 	        DocumentRoot /var/www/html/nextcloud
 	        
@@ -141,7 +149,7 @@ quit;
 	</VirtualHost>
 	```
 - Now restart Apache
-- access nextcloud (http://localhost/nextcloud)
+- access nextcloud (`http://localhost/nextcloud`)
 
 
   
