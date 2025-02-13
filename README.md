@@ -6,7 +6,7 @@ Nextcloud Hub is the industry-leading, fully open-source, on premise content col
 I am new to nextcloud and followed the the steps presented at [Install Nextcloud on Ubuntu 24.04 LTS – Complete Guide](https://mailserverguru.com/install-nextcloud-on-ubuntu-24-04-lts/). I have outlined the steps as follows.
 
 The core system of Nextcloud requires **Apache**, **MariaDB**, and **PHP** to be installed. Their installation and configuration procedures are presented in the following sections.
-## Step 1: Update and Upgrade the Ubuntu Packages
+## Step 1: Update Ubuntu packages
 `sudo apt update && apt upgrade -y`
 
 ## Step2: Install Apache2
@@ -24,22 +24,23 @@ sudo apt install php php-common libapache2-mod-php php-bz2 php-gd php-mysql \
 For Nextcloud to work correctly, we need `mod_rewrite`,`mod_headers`, `mod_env`, `mod_dir` and `mod_mime` modules.
 Enable them by running:
 ```
-a2enmod env
-a2enmod rewrite
-a2enmod dir
-a2enmod mime
-a2enmod headers
-a2enmod setenvif
-a2enmod ssl
+sudo a2enmod env
+sudo a2enmod rewrite
+sudo a2enmod dir
+sudo a2enmod mime
+sudo a2enmod headers
+sudo a2enmod setenvif
+sudo a2enmod ssl
 ```
-- Now, Restart, Enable and Check Apache is Running Properly.
+Now, restart, enable and check if Apache is running.
 ```
-systemctl restart apache2
-systemctl enable apache2
+sudo systemctl restart apache2
+sudo systemctl enable apache2
+sudo systemctl status apache2
 ```
-- Check modules are loaded on Apache (Output included)
+Check modules are loaded on Apache (Output included)
 ```
-root@tek-OptiPlex-3020:~# apache2ctl -M
+tek@tek-OptiPlex-3020:~# sudo apache2ctl -M
 AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
 Loaded Modules:
  core_module (static)
@@ -76,13 +77,14 @@ Loaded Modules:
  status_module (shared)
 root@tek-OptiPlex-3020:~#
 ```
-### Install and Configure MariaDB Server
-- install mariadb-server
+## Step 5: Install and configure MariaDB server
 ```
-apt install mariadb-server -y
+sudo apt install mariadb-server -y
 ```
-- type `mysql` to Login to MariaDB
-- Create Database and User for Nextcloud and Provide User Permissions.
+To start the MySQL command line mode use the following command:
+`sudo mysql`
+
+Create batabase and user for Nextcloud and set user permissions. Here, the database, the username and the password are all`nextcloud`.
 ```
 CREATE USER 'nextcloud'@'localhost' IDENTIFIED BY 'nextcloud';
 CREATE DATABASE nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
@@ -91,25 +93,26 @@ FLUSH PRIVILEGES;
 quit;
 
 ```
-- Now, restart and enable MariaDB service.
-   ```
-   systemctl restart mariadb
-   systemctl enable mariadb
-   ```
-- type `systemctl status mariadb` to check MariaDB is running.
-### Download Nextcloud, Unzip and Permission
-- Download and unzip in the /var/www/html folder
-  ```
-  cd /var/www/html
-  wget https://download.nextcloud.com/server/releases/latest.zip
-  unzip latest.zip
-  ```
-- Change the ownership of the nextcloud directory to the HTTP user.
-  ```
-  chown -R www-data:www-data /var/www/html/nextcloud/
-  ```
-### Install Nextcloud From Command Line
-- Run the below command to install nextcloud (provide your own credentials)
+Now, restart and enable MariaDB service. Also type `systemctl status mariadb` to check MariaDB is running.
+```
+sudo systemctl restart mariadb
+sudo systemctl enable mariadb
+```
+## Step 6: Install Nextcloud
+Three steps are neede to install NextCloud from CLI.
+**Download NextCloud**
+Download the archive of the latest Nextcloud version from https://download.nextcloud.com/server/releases/latest.zip. Visit [releases](https://download.nextcloud.com/server/releases/) for all realses of NextCloud. I downloaded and unzip it from my web directory.
+```
+cd /var/www/html
+wget https://download.nextcloud.com/server/releases/latest.zip
+unzip latest.zip
+```
+Change the ownership of the nextcloud directory to the HTTP user.
+```
+chown -R www-data:www-data /var/www/html/nextcloud/
+```
+## Step 7:  From Command Line
+- Run the commands shown to install nextcloud. 
   ```
   cd /var/www/html/nextcloud
   sudo -u www-data php occ  maintenance:install --database \
