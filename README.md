@@ -3,7 +3,8 @@ Nextcloud installation on a new Ubuntu 24.04 server
 
 Nextcloud Hub is the industry-leading, fully open-source, on premise content collaboration platform. Teams access, share and edit their documents, chat and participate in video calls and manage their mail and calendar and projects across mobile, desktop and web interfaces. More information can be found at (https://nextcloud.com/about/)
 
-- I followed the steps presented at [Install Nextcloud on Ubuntu 24.04 LTS – Complete Guide](https://mailserverguru.com/install-nextcloud-on-ubuntu-24-04-lts/)
+I am new to nextcloud and strictly followed the the steps presented at [Install Nextcloud on Ubuntu 24.04 LTS – Complete Guide](https://mailserverguru.com/install-nextcloud-on-ubuntu-24-04-lts/).
+
 ### Install Apache2 and PHP Modules.
 - install apache2
 ```
