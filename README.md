@@ -1,26 +1,9 @@
 # nextcloud-installation
-Nextcloud installation on Ubuntu 24.04 server
+Nextcloud installation on a new Ubuntu 24.04 server
 
-# OPtion 1: [Example installation on Ubuntu 20.04 LTS](https://docs.nextcloud.com/server/20/admin_manual/installation/example_ubuntu.html/)
-- install packages required by nextcloud
-```
-sudo apt update
-sudo apt install apache2 mariadb-server libapache2-mod-php7.4
-sudo apt install php7.4-gd php7.4-mysql php7.4-curl php7.4-mbstring php7.4-intl
-sudo apt install php7.4-gmp php7.4-bcmath php-imagick php7.4-xml php7.4-zip
-```
-- Now you need to create a database user and the database itself by using the MySQL command line interface. The database tables will be created by Nextcloud when you login for the first time.
-```
-sudo /etc/init.d/mysql start
-sudo mysql -uroot -p
-```
-```
-CREATE USER 'nextcloud'@'localhost' IDENTIFIED BY 'nextcloud';
-CREATE DATABASE IF NOT EXISTS nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-GRANT ALL PRIVILEGES ON nextcloud.* TO 'nextcloud'@'localhost';
-FLUSH PRIVILEGES;
-```
-# OPtion 2: [Install Nextcloud on Ubuntu 24.04 LTS – Complete Guide](https://mailserverguru.com/install-nextcloud-on-ubuntu-24-04-lts/)
+Nextcloud Hub is the industry-leading, fully open-source, on premise content collaboration platform. Teams access, share and edit their documents, chat and participate in video calls and manage their mail and calendar and projects across mobile, desktop and web interfaces. More information can be found at (https://nextcloud.com/about/)
+
+- I followed the steps presented at [Install Nextcloud on Ubuntu 24.04 LTS – Complete Guide](https://mailserverguru.com/install-nextcloud-on-ubuntu-24-04-lts/)
 ### Install Apache2 and PHP Modules.
 - install apache2
 ```
