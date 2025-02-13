@@ -100,7 +100,9 @@ sudo systemctl enable mariadb
 ```
 ## Step 6: Install Nextcloud
 Three steps are neede to install NextCloud from CLI.
+
 **Download NextCloud**
+
 Download the archive of the latest Nextcloud version from https://download.nextcloud.com/server/releases/latest.zip. Visit [releases](https://download.nextcloud.com/server/releases/) for all realses of NextCloud. I downloaded and unzip it from my web directory.
 ```
 cd /var/www/html
