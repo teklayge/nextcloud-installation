@@ -120,6 +120,8 @@ quit;
   "mysql" --database-name "nextcloud"  --database-user "nextcloud" --database-pass \
   'nextcloud' --admin-user "tek" --admin-pass "1qazxsw2"
   ```
+- I think,the database credentials can be configured later with browser. In that case, the ff command can be used to install nextcloud.
+  `chown -R www-data:www-data /var/www/html/nextcloud`.
 - Nextcloud allows access only from localhost, add a trusted ip or domain
   ```
 	  vi /var/www/html/nextcloud/config/config.php
@@ -130,8 +132,8 @@ quit;
 	    1 => 'nc.mailserverguru.com',   // we Included the Sub Domain
 	  ),
    ```
-- I think,the database credentials can be configured later with browser. in that case, the ff command can be used to install nextcloud.
-  `chown -R www-data:www-data /var/www/html/nextcloud`
+-	But, the `/var/www/html/nextcloud/config/config.php` doesn't have an entry, I am not sure if I have to add the `trusted_domains` thing. For now, I have skipped it.
+
 - Configure Apache to load Nextcloud from the /var/www/html/nextcloud folder. I used port `8080`.
 	```  
 	vi /etc/apache2/sites-enabled/000-default.conf
