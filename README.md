@@ -1,4 +1,4 @@
-# nextcloud-installation
+# Nextcloud-installation
 
 Nextcloud installation on a new Ubuntu 24.04 server
 
